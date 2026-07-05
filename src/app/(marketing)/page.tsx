@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { 
   Sparkles, 
   ArrowRight, 
@@ -11,346 +12,406 @@ import {
   MessageSquare, 
   ShieldCheck, 
   Check,
-  Play,
-  Zap,
   TrendingUp,
-  Brain
+  Brain,
+  Sliders,
+  DollarSign,
+  Clock,
+  Layers,
+  ArrowUpRight
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-
 
 export default function MarketingHomePage() {
   const trustedBrands = ["Stripe", "Linear", "Vercel", "Notion", "OpenAI", "Anthropic", "Apple"];
 
-  const stats = [
-    { label: "Aggregate Model Confidence", value: "94.2%" },
-    { label: "Mean Inference Speed", value: "142ms" },
-    { label: "Data Decision Nodes", value: "10M+" },
-  ];
+  // ROI Calculator State integrated directly on home page for high engagement
+  const [decisions, setDecisions] = useState(3000);
+  const [hoursSaved, setHoursSaved] = useState(5);
+  const [laborCost, setLaborCost] = useState(75);
 
-  const features = [
-    {
-      title: "Data Upload Nodes",
-      description: "Drag & drop CSV or Excel datasets. Evaluate columns schema, metadata structures, and preview tables client-side in seconds.",
-      icon: <Database className="w-5 h-5 text-neutral-700" />,
-      link: "/features"
-    },
-    {
-      title: "Regression Projections",
-      description: "Deploy Linear or Exponential mathematical regressions. Chart future metrics pacing alongside shaded confidence corridors.",
-      icon: <LineChart className="w-5 h-5 text-emerald-500" />,
-      link: "/features"
-    },
-    {
-      title: "Conversational Intelligence",
-      description: "Query rows, CAC dynamics, and recurring revenues with context-aware AI. Streams formatted answers with source references.",
-      icon: <MessageSquare className="w-5 h-5 text-blue-500" />,
-      link: "/features"
-    }
-  ];
+  const monthlySavings = decisions * hoursSaved * laborCost;
+  const yearlySavings = monthlySavings * 12;
 
   return (
-    <div className="space-y-24 pb-20 select-none">
+    <div className="space-y-32 pb-24 relative overflow-hidden">
       
+      {/* Background ambient light guides */}
+      <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-blue-500/[0.03] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-[40%] right-[-10%] w-[600px] h-[600px] bg-emerald-500/[0.02] rounded-full blur-[140px] pointer-events-none" />
+
       {/* 1. Hero Section */}
-      <section className="relative pt-12 md:pt-20 px-6 max-w-7xl mx-auto overflow-hidden">
-        {/* Ambient background glows */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-neutral-100/50 rounded-full blur-[100px] pointer-events-none z-0" />
-
-        <div className="text-center space-y-6 relative z-10 max-w-4xl mx-auto">
-          {/* Top pill notification */}
-          <div className="inline-flex items-center space-x-2 bg-brand-softGray border border-border rounded-full py-1 px-3 text-[10px] font-semibold text-brand-charcoal">
-            <Sparkles className="w-3.5 h-3.5 text-brand-blue animate-pulse" />
-            <span>Introducing SignalForge AI Decision Engine</span>
-          </div>
-
-          <h1 className="font-serif text-4xl md:text-6xl font-bold tracking-tight text-brand-charcoal leading-[1.1]">
-            Turning Data into <br />
-            <span className="text-brand-blue">Smarter Decisions</span>
-          </h1>
-
-          <p className="text-sm md:text-base text-brand-stone max-w-2xl mx-auto leading-relaxed">
-            Upload CSV spreadsheets, run predictive statistical models, compile executive reports, and query details in real-time with context-aware AI.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
-            <Link href="/register">
-              <Button size="lg" variant="accent" className="bg-brand-charcoal hover:bg-neutral-800 text-brand-warmWhite border-brand-charcoal">
-                Get Started Free
-                <ArrowRight className="w-4 h-4 ml-1.5" />
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button size="lg" variant="outline">
-                Contact Sales
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        {/* 3D Dashboard Mockup Preview Panel */}
-        <div className="mt-16 relative flex justify-center z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40, rotateX: 12 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.15 }}
-            className="w-full max-w-4xl bg-card border border-border rounded-2xl shadow-popup overflow-hidden p-6 text-left"
-          >
-            {/* Dashboard Mock Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
-              <div className="flex items-center space-x-2">
-                <span className="w-3 h-3 rounded-full bg-red-400" />
-                <span className="w-3 h-3 rounded-full bg-amber-400" />
-                <span className="w-3 h-3 rounded-full bg-emerald-400" />
-                <span className="text-[10px] text-brand-stone font-mono ml-2">https://app.signalforge.ai/dashboard</span>
-              </div>
+      <section className="relative pt-20 md:pt-28 px-6 max-w-7xl mx-auto text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Hero text */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="inline-flex items-center space-x-2 bg-brand-softGray/30 border border-border/80 rounded-full py-1.5 px-3.5 text-[10px] font-semibold tracking-wider text-brand-blue uppercase">
+              <Sparkles className="w-3.5 h-3.5 text-brand-blue animate-pulse" />
+              <span>Next-Gen Decision Intelligence</span>
             </div>
 
-            {/* Dashboard Mock Content */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="col-span-2 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-background border border-border rounded-xl p-4">
-                    <span className="text-[9px] uppercase font-serif text-brand-stone tracking-wider block">Decision Accuracy</span>
-                    <span className="font-mono text-lg font-bold text-brand-charcoal mt-1 inline-block">94.2%</span>
-                  </div>
-                  <div className="bg-background border border-border rounded-xl p-4">
-                    <span className="text-[9px] uppercase font-serif text-brand-stone tracking-wider block">Active Projections</span>
-                    <span className="font-mono text-lg font-bold text-brand-charcoal mt-1 inline-block">12 active</span>
-                  </div>
-                </div>
-                {/* Mock Chart Area */}
-                <div className="bg-background border border-border rounded-xl p-4 h-48 flex flex-col justify-between">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-serif font-semibold text-brand-charcoal">Acquisition CAC Projection</span>
-                    <span className="text-[9px] text-brand-stone">Steps horizon: 6</span>
-                  </div>
-                  {/* Visual SVG mock line chart */}
-                  <svg className="w-full h-24 text-brand-blue" viewBox="0 0 100 30">
-                    <path
-                      d="M0 25 L20 20 L40 22 L60 12 L80 8 L100 4"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M60 12 L80 14 L100 18"
-                      fill="none"
-                      stroke="#A1A1AA"
-                      strokeWidth="1.5"
-                      strokeDasharray="2,2"
-                    />
-                    <polygon
-                      points="60,8 80,4 100,0 100,10 80,14 60,16"
-                      fill="rgba(37,99,235,0.08)"
-                    />
-                  </svg>
-                  <div className="flex justify-between text-[8px] font-mono text-brand-stone pt-2 border-t border-border">
-                    <span>Jan</span>
-                    <span>Mar</span>
-                    <span>May</span>
-                    <span>Projection Limit</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Chat Sidebar mock */}
-              <div className="col-span-1 bg-background border border-border rounded-xl p-4 flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-1.5">
-                    <Brain className="w-3.5 h-3.5 text-brand-blue" />
-                    <span className="text-[9px] font-bold uppercase text-brand-charcoal tracking-wide">Data Assistant</span>
-                  </div>
-                  <div className="bg-brand-softGray/50 rounded-lg p-2.5 text-[9px] text-brand-stone leading-relaxed">
-                    Analyzing **SaaS Expansion Channels.xlsx**. Google CAC is $20.10, LinkedIn is $62.20. Recommend shifting budget.
-                  </div>
-                </div>
-                <div className="border border-border rounded-lg p-1.5 flex items-center justify-between text-[9px] bg-brand-offWhite">
-                  <span className="text-brand-stone">CAC trends summary</span>
-                  <ArrowRight className="w-3 h-3 text-brand-charcoal" />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            <h1 className="font-serif text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.05]">
+              Turning Data into <br />
+              <span className="font-serif italic font-normal text-brand-blue">Smarter Decisions</span>
+            </h1>
 
-      {/* 2. Trusted By section */}
-      <section className="border-y border-border py-8 bg-brand-offWhite overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <span className="text-[10px] font-serif uppercase tracking-wider text-brand-stone font-semibold shrink-0">
-            Trusted by modern leaders
-          </span>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-xs font-bold text-brand-stone/60">
-            {trustedBrands.map((brand, idx) => (
-              <span key={idx} className="hover:text-brand-charcoal transition-colors">{brand}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Statistics */}
-      <section className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {stats.map((stat, idx) => (
-            <div key={idx} className="border border-border rounded-xl p-6 text-center space-y-1.5 bg-card shadow-premium">
-              <span className="font-mono text-3xl font-bold tracking-tight text-neutral-900">{stat.value}</span>
-              <p className="text-[10px] font-serif uppercase tracking-wider text-brand-stone mt-1">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 4. Features Grid */}
-      <section className="max-w-7xl mx-auto px-6 space-y-12">
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <h2 className="font-serif text-3xl font-bold tracking-tight text-brand-charcoal">
-            Advanced decision tools out of the box
-          </h2>
-          <p className="text-xs text-brand-stone">
-            All analytics logic runs securely inside Next.js layout structures, allowing rapid deployment.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {features.map((feat, idx) => (
-            <Card key={idx} hoverEffect>
-              <CardHeader className="flex flex-row items-center justify-between pb-3">
-                <span className="p-2 rounded-lg bg-brand-softGray border border-border text-brand-charcoal">
-                  {feat.icon}
-                </span>
-              </CardHeader>
-              <CardContent className="text-left space-y-2">
-                <CardTitle className="text-base">{feat.title}</CardTitle>
-                <p className="text-xs text-brand-stone leading-relaxed">
-                  {feat.description}
-                </p>
-                <div className="pt-2">
-                  <Link href={feat.link} className="inline-flex items-center text-[10px] font-semibold text-brand-blue hover:text-blue-700">
-                    Learn more
-                    <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* 5. Sector Integrations */}
-      <section className="max-w-7xl mx-auto px-6 py-12 border-t border-border">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-left">
-          <div className="space-y-5">
-            <span className="text-[10px] font-serif uppercase tracking-wider text-brand-blue font-semibold">Integrations Grid</span>
-            <h2 className="font-serif text-3xl font-bold tracking-tight text-brand-charcoal leading-snug">
-              Hook up your active storage nodes directly
-            </h2>
-            <p className="text-xs text-brand-stone leading-relaxed">
-              Connect Supabase, database clusters, or Vercel analytics logs in minutes. SignalForge AI synchronizes metadata instantly and creates RLS-isolated files for team members.
+            <p className="text-xs md:text-sm text-brand-stone max-w-xl leading-relaxed">
+              Upload CSV spreadsheets, run predictive least squares regressions, compile executive briefs, and query data in real-time with context-aware AI.
             </p>
-            <div className="pt-2">
-              <Link href="/integrations">
-                <Button size="sm" variant="outline">
-                  Browse compatible integrations
+
+            <div className="flex items-center space-x-4 pt-2">
+              <Link href="/register">
+                <Button size="lg" variant="accent" className="bg-brand-blue hover:bg-blue-600 text-white border-brand-blue shadow-premium text-xs font-semibold px-6">
+                  Get Started Free
+                  <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                </Button>
+              </Link>
+              <Link href="/login">
+                <Button size="lg" variant="outline" className="text-xs border-border hover:bg-brand-softGray/50 px-6">
+                  Explore Sandbox
                 </Button>
               </Link>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
-            {["Supabase Auth", "Supabase DB", "Supabase Storage", "Slack API", "Vercel Deploy", "Excel Node"].map((item, idx) => (
-              <div key={idx} className="border border-border rounded-xl p-4 bg-card text-center space-y-2 hover:border-brand-stone transition-colors shadow-premium">
-                <span className="font-mono text-xs font-semibold text-brand-charcoal block">{item}</span>
-                <span className="text-[9px] text-brand-stone font-mono">Compatible</span>
+          {/* Interactive Floating Product Dashboard Mock */}
+          <div className="lg:col-span-6 flex justify-center relative">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
+              className="w-full max-w-lg bg-[#0C101B] border border-border/80 rounded-2xl p-6 shadow-popup glow-border"
+            >
+              {/* Card Title Header */}
+              <div className="flex items-center justify-between pb-3.5 border-b border-border/50 mb-4 select-none">
+                <div className="flex items-center space-x-1.5">
+                  <img src="/logo.png" alt="SignalForge Logo" className="w-6 h-6 object-contain shrink-0" />
+                  <span className="font-serif font-bold text-xs text-foreground tracking-tight">SignalForge Engine</span>
+                </div>
+                <span className="text-[9px] font-mono text-brand-stone bg-brand-softGray/40 px-2 py-0.5 rounded">v1.1.0 live</span>
               </div>
+
+              {/* Grid content */}
+              <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-2 space-y-4">
+                  <div className="grid grid-cols-2 gap-3.5">
+                    <div className="bg-[#05070D] border border-border/60 rounded-xl p-3.5">
+                      <span className="text-[8px] uppercase tracking-wider text-brand-stone block font-serif">Accuracy fit</span>
+                      <span className="font-mono text-base font-bold text-foreground mt-1 inline-block">94.2%</span>
+                    </div>
+                    <div className="bg-[#05070D] border border-border/60 rounded-xl p-3.5">
+                      <span className="text-[8px] uppercase tracking-wider text-brand-stone block font-serif">Query Latency</span>
+                      <span className="font-mono text-base font-bold text-foreground mt-1 inline-block">142 ms</span>
+                    </div>
+                  </div>
+                  {/* SVG Chart area */}
+                  <div className="bg-[#05070D] border border-border/60 rounded-xl p-3.5 h-44 flex flex-col justify-between">
+                    <div className="flex justify-between items-center text-[9px] font-serif text-brand-stone">
+                      <span>Forecasting Corridor</span>
+                      <span className="text-emerald-500 font-semibold flex items-center space-x-0.5"><TrendingUp className="w-3 h-3" /> <span>+12.4% MoM</span></span>
+                    </div>
+                    <svg className="w-full h-20 text-brand-blue" viewBox="0 0 100 30">
+                      <path
+                        d="M0 26 L20 22 L40 23 L60 14 L80 10 L100 5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M60 14 L80 18 L100 24"
+                        fill="none"
+                        stroke="#64748B"
+                        strokeWidth="1.5"
+                        strokeDasharray="2,2"
+                      />
+                      <polygon
+                        points="60,10 80,6 100,2 100,14 80,18 60,20"
+                        fill="rgba(59, 130, 246, 0.08)"
+                      />
+                    </svg>
+                    <div className="flex justify-between text-[7px] font-mono text-brand-slate border-t border-border/30 pt-1.5">
+                      <span>2026-01</span>
+                      <span>2026-04</span>
+                      <span>2026-06</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-span-1 bg-[#05070D] border border-border/60 rounded-xl p-3.5 flex flex-col justify-between text-left">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-1.5">
+                      <Brain className="w-3.5 h-3.5 text-brand-blue" />
+                      <span className="text-[8px] font-bold uppercase tracking-wider text-foreground">AI Agent</span>
+                    </div>
+                    <p className="text-[9px] text-brand-stone leading-relaxed">
+                      LinkedIn CAC is $62.20. Search CAC is $20.10. Move **15% spend** to Google.
+                    </p>
+                  </div>
+                  <div className="border border-border/60 rounded px-1.5 py-1 flex items-center justify-between text-[8px] bg-brand-softGray/30 font-semibold cursor-pointer text-foreground hover:bg-brand-softGray/50">
+                    <span>Apply shift</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 2. Trusted By */}
+      <section className="py-6 border-y border-border/60 bg-brand-offWhite/30 select-none">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <span className="text-[9px] font-serif uppercase tracking-wider text-brand-stone font-bold shrink-0">
+            COMPATIBLE INFRASTRUCTURE
+          </span>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-xs font-bold text-brand-stone/60">
+            {trustedBrands.map((brand, idx) => (
+              <span key={idx} className="hover:text-foreground transition-colors">{brand}</span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 6. Comparison Section */}
-      <section className="max-w-7xl mx-auto px-6 py-12 border-t border-border">
-        <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
-          <h2 className="font-serif text-3xl font-bold tracking-tight text-brand-charcoal">
-            Built for modern product builders
+      {/* 3. Bento Grid Features Showcase */}
+      <section className="max-w-7xl mx-auto px-6 space-y-12 text-left">
+        <div className="text-left max-w-2xl space-y-3">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-brand-blue font-semibold">Bento Matrix</span>
+          <h2 className="font-serif text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+            Complete Decision Architecture
           </h2>
-          <p className="text-xs text-brand-stone">How SignalForge stacks up against bloated legacy dashboards</p>
+          <p className="text-xs text-brand-stone">
+            Remove visual layout noise. Explore modules designed to streamline spreadsheets mathematical calculations.
+          </p>
         </div>
 
-        <div className="border border-border rounded-2xl overflow-hidden shadow-premium bg-card">
-          <table className="w-full text-xs text-left border-collapse">
-            <thead>
-              <tr className="bg-brand-offWhite border-b border-border font-serif font-bold">
-                <th className="p-4 text-brand-charcoal">Feature</th>
-                <th className="p-4 text-brand-blue">SignalForge AI</th>
-                <th className="p-4 text-brand-stone">Legacy BI Tooling</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border font-medium">
-              <tr className="hover:bg-neutral-50 transition-colors">
-                <td className="p-4 text-brand-charcoal font-semibold">Mathematical Forecasting</td>
-                <td className="p-4 text-emerald-600 flex items-center space-x-1"><Check className="w-3.5 h-3.5" /> <span>Linear & Exponential Regressions</span></td>
-                <td className="p-4 text-brand-stone">Manual Excel projections only</td>
-              </tr>
-              <tr className="hover:bg-neutral-50 transition-colors">
-                <td className="p-4 text-brand-charcoal font-semibold">AI Context-Aware Chat</td>
-                <td className="p-4 text-emerald-600 flex items-center space-x-1"><Check className="w-3.5 h-3.5" /> <span>Streams tabular previews & references</span></td>
-                <td className="p-4 text-brand-stone">Static SQL dashboard queries</td>
-              </tr>
-              <tr className="hover:bg-neutral-50 transition-colors">
-                <td className="p-4 text-brand-charcoal font-semibold">Synthesis Reports</td>
-                <td className="p-4 text-emerald-600 flex items-center space-x-1"><Check className="w-3.5 h-3.5" /> <span>One-click PDF download & share loops</span></td>
-                <td className="p-4 text-brand-stone">Complex setups required</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+          {/* Bento 1: Datasets (Wide) */}
+          <div className="md:col-span-4 bg-[#0C101B] border border-border/80 rounded-2xl p-6 flex flex-col justify-between hover:border-brand-blue/30 transition-all group glow-border">
+            <div className="space-y-2 max-w-md">
+              <span className="p-1.5 rounded-lg bg-brand-softGray/40 text-brand-blue inline-block border border-border/60"><Database className="w-4 h-4" /></span>
+              <h3 className="font-serif text-lg font-bold text-foreground">Client-Side Dataset Nodes</h3>
+              <p className="text-xs text-brand-stone leading-relaxed">
+                Load CSV/Excel spreadsheets instantly. Schema checks, cell previews, and types mapping run entirely in the browser using custom FileReader regex parsers.
+              </p>
+            </div>
+            <div className="mt-6 border-t border-border/40 pt-4 flex items-center justify-between text-[10px] text-brand-stone font-semibold">
+              <span>Supports files up to 100MB</span>
+              <Link href="/features" className="flex items-center text-brand-blue group-hover:translate-x-1 transition-transform">
+                <span>View documentation</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Bento 2: AI Chat (Tall) */}
+          <div className="md:col-span-2 bg-[#0C101B] border border-border/80 rounded-2xl p-6 flex flex-col justify-between hover:border-brand-blue/30 transition-all group glow-border">
+            <div className="space-y-3">
+              <span className="p-1.5 rounded-lg bg-brand-softGray/40 text-brand-blue inline-block border border-border/60"><Brain className="w-4 h-4" /></span>
+              <h3 className="font-serif text-lg font-bold text-foreground">Context-Aware AI</h3>
+              <p className="text-xs text-brand-stone leading-relaxed">
+                Query columns, metrics, or CAC payloads. Streams markdown responses, rendering clean comparative tables.
+              </p>
+            </div>
+            <div className="mt-6 border-t border-border/40 pt-4 flex items-center justify-between text-[10px] text-brand-stone font-semibold">
+              <span>Streams refs logs</span>
+              <Link href="/features" className="flex items-center text-brand-blue group-hover:translate-x-1 transition-transform">
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Bento 3: Forecasting (Tall) */}
+          <div className="md:col-span-2 bg-[#0C101B] border border-border/80 rounded-2xl p-6 flex flex-col justify-between hover:border-brand-blue/30 transition-all group glow-border">
+            <div className="space-y-3">
+              <span className="p-1.5 rounded-lg bg-brand-softGray/40 text-emerald-500 inline-block border border-border/60"><LineChart className="w-4 h-4" /></span>
+              <h3 className="font-serif text-lg font-bold text-foreground">Least Squares Regressions</h3>
+              <p className="text-xs text-brand-stone leading-relaxed">
+                Project values. Shales confidence bounds based on residual errors standard deviation.
+              </p>
+            </div>
+            <div className="mt-6 border-t border-border/40 pt-4 flex items-center justify-between text-[10px] text-brand-stone font-semibold">
+              <span>Linear & Exponential curves</span>
+              <Link href="/features" className="flex items-center text-brand-blue group-hover:translate-x-1 transition-transform">
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Bento 4: Compliance (Wide) */}
+          <div className="md:col-span-4 bg-[#0C101B] border border-border/80 rounded-2xl p-6 flex flex-col justify-between hover:border-brand-blue/30 transition-all group glow-border">
+            <div className="space-y-2 max-w-md">
+              <span className="p-1.5 rounded-lg bg-brand-softGray/40 text-brand-blue inline-block border border-border/60"><ShieldCheck className="w-4 h-4" /></span>
+              <h3 className="font-serif text-lg font-bold text-foreground">RLS isolated structures</h3>
+              <p className="text-xs text-brand-stone leading-relaxed">
+                Row-level database policies prevent cross-organization records leaks. Authenticate securely using Supabase auth and rotatable API Keys.
+              </p>
+            </div>
+            <div className="mt-6 border-t border-border/40 pt-4 flex items-center justify-between text-[10px] text-brand-stone font-semibold">
+              <span>Fully SOC2 Type II compatible</span>
+              <Link href="/security" className="flex items-center text-brand-blue group-hover:translate-x-1 transition-transform">
+                <span>Explore security policies</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* 7. Enterprise Security Section */}
-      <section className="max-w-7xl mx-auto px-6 py-12 border-t border-border text-left">
-        <div className="bg-brand-charcoal text-brand-warmWhite rounded-2xl p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 relative overflow-hidden shadow-popup">
-          {/* Ambient accent */}
-          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
-
-          <div className="space-y-4 max-w-xl z-10">
-            <span className="text-[10px] font-mono text-brand-blue uppercase tracking-widest font-semibold flex items-center space-x-1">
-              <ShieldCheck className="w-4 h-4 mr-1.5 text-emerald-500" />
-              <span>Enterprise Grade Compliance</span>
-            </span>
-            <h3 className="font-serif text-2xl md:text-3xl font-bold tracking-tight">
-              Absolute security. Zero metadata leaks.
-            </h3>
-            <p className="text-[11px] text-neutral-400 leading-relaxed">
-              We encrypt database fields at rest using AES-256 standards, utilize role isolation row level policies (RLS), and support active audit records.
+      {/* 4. Live ROI Calculator Section (High Interaction) */}
+      <section className="max-w-7xl mx-auto px-6 py-12 border-t border-border/60 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 space-y-5">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-brand-blue font-semibold">ROI calculator</span>
+            <h2 className="font-serif text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+              Estimate Your Optimization Lift
+            </h2>
+            <p className="text-xs text-brand-stone leading-relaxed">
+              Calculate the engineering cycles and manual hours optimized by automating data forecasting pipelines and reports generation with SignalForge.
             </p>
+
+            <div className="space-y-5 pt-3">
+              {/* Slider 1 */}
+              <div className="space-y-2">
+                <div className="flex justify-between text-[9px] font-serif uppercase tracking-wider text-brand-stone font-semibold">
+                  <span>Decisions optimized / mo</span>
+                  <span className="font-mono text-foreground">{decisions.toLocaleString()}</span>
+                </div>
+                <input
+                  type="range"
+                  min="100"
+                  max="10000"
+                  step="100"
+                  value={decisions}
+                  onChange={(e) => setDecisions(Number(e.target.value))}
+                  className="w-full h-1 bg-brand-softGray rounded-lg appearance-none cursor-pointer accent-brand-blue"
+                />
+              </div>
+
+              {/* Slider 2 */}
+              <div className="space-y-2">
+                <div className="flex justify-between text-[9px] font-serif uppercase tracking-wider text-brand-stone font-semibold">
+                  <span>Analyst hours saved per step</span>
+                  <span className="font-mono text-foreground">{hoursSaved} hours</span>
+                </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="20"
+                  step="1"
+                  value={hoursSaved}
+                  onChange={(e) => setHoursSaved(Number(e.target.value))}
+                  className="w-full h-1 bg-brand-softGray rounded-lg appearance-none cursor-pointer accent-brand-blue"
+                />
+              </div>
+
+              {/* Slider 3 */}
+              <div className="space-y-2">
+                <div className="flex justify-between text-[9px] font-serif uppercase tracking-wider text-brand-stone font-semibold">
+                  <span>Average labor cost ($/hr)</span>
+                  <span className="font-mono text-foreground">${laborCost}/hr</span>
+                </div>
+                <input
+                  type="range"
+                  min="20"
+                  max="200"
+                  step="5"
+                  value={laborCost}
+                  onChange={(e) => setLaborCost(Number(e.target.value))}
+                  className="w-full h-1 bg-brand-softGray rounded-lg appearance-none cursor-pointer accent-brand-blue"
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="flex items-center space-x-3 shrink-0 z-10">
-            <Link href="/security">
-              <Button className="bg-white hover:bg-neutral-100 text-brand-charcoal border-white text-xs py-2">
-                Explore Security features
-              </Button>
-            </Link>
+          {/* ROI Display Panel */}
+          <div className="lg:col-span-7 bg-[#0C101B] border border-border/80 rounded-2xl p-8 flex flex-col justify-between gap-6 shadow-popup glow-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-border/50">
+              <div className="space-y-2 text-left">
+                <span className="text-[9px] font-serif uppercase tracking-wider text-brand-stone font-semibold block">Estimated Monthly Savings</span>
+                <span className="font-mono text-4xl font-extrabold text-brand-blue flex items-center tracking-tight">
+                  <DollarSign className="w-8 h-8 shrink-0 text-brand-blue/70" />
+                  <span>{monthlySavings.toLocaleString()}</span>
+                </span>
+                <p className="text-[10px] text-brand-slate leading-snug">Calculated cost saved by deploying model automations.</p>
+              </div>
+
+              <div className="space-y-2 text-left sm:pl-8">
+                <span className="text-[9px] font-serif uppercase tracking-wider text-brand-stone font-semibold block">Yearly Savings pace</span>
+                <span className="font-mono text-3xl font-bold text-foreground flex items-center tracking-tight">
+                  <DollarSign className="w-6 h-6 shrink-0 text-neutral-500" />
+                  <span>{yearlySavings.toLocaleString()}</span>
+                </span>
+                <p className="text-[10px] text-brand-slate leading-snug">Projected annual reduction in data analyst operations costs.</p>
+              </div>
+            </div>
+
+            <div className="border-t border-border/50 pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-[10px] text-brand-stone font-medium">
+              <p className="flex items-center"><Clock className="w-3.5 h-3.5 mr-1.5 text-brand-blue" /> <span>Saves {(decisions * hoursSaved).toLocaleString()} hours of research cycles/mo</span></p>
+              <Link href="/register">
+                <Button size="sm" variant="accent" className="bg-brand-blue hover:bg-blue-600 text-white text-xs font-semibold py-1.5 px-4 rounded-lg">
+                  Deploy Workspace Node
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 8. Final CTA Section */}
-      <section className="max-w-4xl mx-auto px-6 text-center space-y-6 pt-12">
-        <h2 className="font-serif text-3xl font-bold tracking-tight text-neutral-900">
-          Start optimizing your business decisions today
-        </h2>
-        <p className="text-xs text-brand-stone max-w-md mx-auto leading-relaxed">
-          Create a sandbox workspace and connect files in minutes. Join data intelligence builders.
-        </p>
-        <div>
-          <Link href="/register">
-            <Button size="lg" variant="accent" className="bg-brand-charcoal hover:bg-neutral-800 text-white border-brand-charcoal px-8 shadow-premium">
-              Get Started Free
-            </Button>
-          </Link>
+      {/* 5. Pricing Teaser Grid */}
+      <section className="max-w-7xl mx-auto px-6 py-12 border-t border-border/60 text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          <div className="space-y-4">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-brand-blue font-semibold">Tiers summary</span>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold tracking-tight text-foreground leading-tight">
+              Flexible setups for modern builders
+            </h2>
+            <p className="text-xs text-brand-stone leading-relaxed">
+              Start on our free sandbox to test columns calculations, then upgrade to scale members capacity.
+            </p>
+            <div className="pt-2">
+              <Link href="/pricing">
+                <Button size="sm" variant="outline" className="text-xs">
+                  View plans comparison
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <Card className="bg-[#0C101B] border-border/80 p-6 glow-border">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h4 className="font-serif text-base font-bold text-foreground">Starter Tier</h4>
+                  <span className="text-[9px] font-mono text-brand-stone">Sandbox limits</span>
+                </div>
+                <span className="font-mono text-lg font-bold text-foreground">$0</span>
+              </div>
+              <p className="text-xs text-brand-stone leading-relaxed mb-4">
+                Perfect for individual developers testing mathematical forecasting models on single sheets.
+              </p>
+              <Link href="/register">
+                <Button variant="outline" className="w-full text-xs py-1.5">Get Started Free</Button>
+              </Link>
+            </Card>
+
+            <Card className="bg-[#0C101B] border-brand-blue ring-1 ring-brand-blue/20 p-6 glow-border">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h4 className="font-serif text-base font-bold text-foreground">Business Tier</h4>
+                  <span className="text-[9px] font-mono text-brand-blue">Recommended</span>
+                </div>
+                <span className="font-mono text-lg font-bold text-brand-blue">$149<span className="text-[10px] text-brand-stone font-semibold">/mo</span></span>
+              </div>
+              <p className="text-xs text-brand-stone leading-relaxed mb-4">
+                Unlimited dataset uploads, role permissions (RBAC), and synthesis PDF exporting tools.
+              </p>
+              <Link href="/register">
+                <Button className="w-full text-xs py-1.5 bg-brand-blue hover:bg-blue-600 text-white border-brand-blue shadow-premium font-semibold">Start free trial</Button>
+              </Link>
+            </Card>
+          </div>
         </div>
       </section>
 
